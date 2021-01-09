@@ -1,2 +1,2 @@
 const inqurier = require("inquirer");
-const mysql = require("mysql2");
+const mysql = require("mysql2")
