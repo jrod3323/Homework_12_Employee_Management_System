@@ -17,12 +17,12 @@ This application is designed to provide a user with an interface for managing a 
 
 ## Installation
 
-To install the application you must first install node.js.  You can [click here](https://nodejs.org/en/download/) to navigate to the Node.js download page.  After installing node, you must also install the required npm packages.  To do so, navigate to the applications file path in the terminal and type "npm i" or "npm i inquirer mysql2" to install the required inquirer and mysql2 modules.   
+To install the application you must first install node.js.  You can [click here](https://nodejs.org/en/download/) to navigate to the Node.js download page.  After installing node, you must also install the required npm packages.  To do so, navigate to the applications file path in the terminal and type "npm i" or "npm i inquirer mysql2" to install the required inquirer and mysql2 modules.  After installing those modules, you will need to download, install, and set up MYSQL workbench.  You can download it by [clicking here](https://www.mysql.com/products/workbench/).  Once your workbench is set up, you will want to copy the schema.sql file and paste into the workbench to set up your initial database.  For your, MYSQL connection please be sure to input the password that you created for your MYSQL server.
 
 
 ## Usage 
 
-To run the program, please complete installation instructions first. Once the porgam is installed, navigate to the programs file pathway in the terminal and then run the program by typing "node app.js".  This will initiate the program and you will be prompted with a series of questions with how you would like to manage the employees
+To run the program, please complete installation instructions first. Once the porgam is installed, navigate to the programs file pathway in the terminal and then run the program by typing "node server.js".  This will initiate the program and you will be prompted with a series of questions with how you would like to manage the employees.
 
 
 ## Screenshot
