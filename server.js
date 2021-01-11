@@ -7,7 +7,10 @@ const {
     promptAddEmployee,
     promptAddEmployeeRole,
     promptAddRole,
-    promptAddRoleDept
+    promptAddRoleDept,
+    promptEmployeeInfo,
+    promptEmployeeToUpdate,
+    promptManager
 } = require('./lib/prompts');
 
 // import constants choice variables
@@ -17,7 +20,7 @@ const [ VIEW_ALL_EMPLOYEES,
     ADD_DEPARTMENT,
     ADD_EMPLOYEE,
     ADD_ROLE,
-    UPDATE_EMPLOYEE_ROLE] = require('./lib/const');
+    UPDATE_EMPLOYEE_INFO] = require('./lib/const');
 
 // import query functions
 const  {
@@ -26,7 +29,9 @@ const  {
     viewAllRoles,
     addDepartment,
     addEmployee,
-    addRole
+    addRole,
+    updateRole,
+    updateManager
     } = require('./lib/queries');
 
 
@@ -57,7 +62,7 @@ var connection = mysql.createConnection({
 // runPrompt function for initial inquirer prompt
 async function runPrompt() {
 
-    let answer, employee, role, department;
+    let answer, employee, role, department, info;
 
     answer = await promptChoices();
     console.table(answer.name);
@@ -65,37 +70,65 @@ async function runPrompt() {
     switch (answer.name) {
         case VIEW_ALL_EMPLOYEES:
             //Queries all from employee table
-            viewAllEmployees(connection);
+            await viewAllEmployees(connection);
+            await runPrompt();
             break;
         case VIEW_ALL_DEPARTMENTS:
             //Queries all from department table
-            viewAllDepartments(connection);
+            await viewAllDepartments(connection);
+            await runPrompt();
             break;
         case VIEW_ALL_ROLE:
             //Queries all from role table
-            viewAllRoles(connection);
+            await viewAllRoles(connection);
+            await runPrompt();
             break;
         case ADD_DEPARTMENT:
             //prompts for department name
+            await viewAllDepartments(connection);
             department = await promptAddDepartment();
             addDepartment(connection, department.name);
-            viewAllDepartments(connection);
+            await viewAllDepartments(connection);
+            await runPrompt();
             break;
         case ADD_EMPLOYEE:
-            //prompts for department name
             employee = await promptAddEmployee();
-            // viewAllDepartments(connection);
-            // var department = await promptAddEmployeeDepartment();
             await viewAllRoles(connection);
             role = await promptAddEmployeeRole();
             addEmployee(connection, employee.first_name , employee.last_name,role.id);
-            viewAllEmployees(connection);
+            await viewAllEmployees(connection);
+            await runPrompt();
             break;
         case ADD_ROLE:
+            await viewAllRoles(connection);
             role = await promptAddRole();
             await viewAllDepartments(connection);
             department = await promptAddRoleDept();
             addRole(connection,role.title,role.salary,department.id)
-            viewAllRoles(connection);
+            await viewAllRoles(connection);
+            await runPrompt();
+        case UPDATE_EMPLOYEE_INFO:
+            info = await promptEmployeeInfo();
+            if(info.name === "Role"){
+                await viewAllEmployees(connection);
+                employee = await promptEmployeeToUpdate();
+                await viewAllRoles(connection);
+                role = await promptAddEmployeeRole();
+                await updateRole(connection, role.id , employee.id);
+                await viewAllEmployees(connection);
+                await runPrompt();
+            };
+            if(info.name === "Manager ID"){
+                await viewAllEmployees(connection);
+                employee = await promptEmployeeToUpdate();
+                await viewAllEmployees(connection);
+                manager = await promptManager();
+                await updateManager(connection, manager.id, employee.id);
+                await viewAllEmployees(connection);
+                await runPrompt();
+            }
+        default:
+            connection.end();
+            break;
     }
 }
