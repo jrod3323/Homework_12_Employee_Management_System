@@ -127,7 +127,7 @@ async function runPrompt() {
                 await viewAllEmployees(connection);
                 await runPrompt();
             }
-        default:
+        case "EXIT":
             break;
     }
 }
