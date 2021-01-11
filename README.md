@@ -27,9 +27,9 @@ To run the program, please complete installation instructions first. Once the po
 
 ## Screenshot
 
-![Front Page Gif](./images/employeemanagement.gif)
+![Front Page Gif](./assets/employeemanagement.gif)
 
-You can also access a video walkthrough of the application by [Clicking Here]().
+You can also access a video walkthrough of the application by [Clicking Here](https://youtu.be/cx40WNtOLlU).
 
 
 ## Questions
