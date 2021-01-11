@@ -128,7 +128,6 @@ async function runPrompt() {
                 await runPrompt();
             }
         default:
-            connection.end();
             break;
     }
 }
